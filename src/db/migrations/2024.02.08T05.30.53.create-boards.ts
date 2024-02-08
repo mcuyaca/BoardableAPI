@@ -13,5 +13,5 @@ export const up: Migration = async (params) => {
   );
 };
 export const down: Migration = async (params) => {
-  params.context.query(`DROP TABLE boards;`);
+  params.context.query(`DROP TABLE lists;`);
 };

@@ -7,6 +7,8 @@ import authRouter from "./routers/auth-router";
 import cors from "cors";
 import { accountRouter } from "./routers/account-router";
 import { boardRouter } from "./routers/board-router";
+import { listRouter } from "./routers/list-router";
+import { taskRouter } from "./routers/task-router";
 
 if (process.env["NODE_ENV"] === "test") {
   configDotenv({ path: ".env.test" });
@@ -23,4 +25,6 @@ app.use(logRequest);
 app.use("/", authRouter);
 app.use("/me", accountRouter);
 app.use("/board", boardRouter);
+app.use("/list", listRouter);
+app.use("/task", taskRouter);
 app.use(errorHandler);

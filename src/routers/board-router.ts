@@ -7,7 +7,7 @@ import {
   getBoardById,
   deleteBoard,
   postNewBoard,
-} from "../services/interaction-service";
+} from "../services/board-service";
 import { ApiError } from "../middlewares/error";
 
 export const boardRouter = express.Router();
@@ -19,7 +19,7 @@ boardRouter.get("/", authenticationHandler, async (req, res) => {
     res.status(200).json({ ok: true, data: boards });
     res.status;
   } catch (error) {
-    res.status(500).send("Error al obtener los usuarios");
+    res.status(500).send("Error al obtener los boards");
   }
 });
 
