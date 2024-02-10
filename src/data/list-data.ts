@@ -6,7 +6,6 @@ export async function getLists(userId: number) {
 }
 
 export async function postNewList(data: ListParams, userId: number) {
-  console.log(data);
   return (
     await query(
       `INSERT INTO lists (userId, title,boardId) 
