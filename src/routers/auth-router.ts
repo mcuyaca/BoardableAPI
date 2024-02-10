@@ -30,7 +30,7 @@ authRouter.post("/login", async (req, res, next) => {
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "10h" });
     res.status(200).json({
       ok: true,
-      data: { token },
+      token,
     });
   } catch (error) {
     next(error);

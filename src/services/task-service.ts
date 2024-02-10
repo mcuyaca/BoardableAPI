@@ -1,22 +1,18 @@
 import { TaskParams } from "../models/task";
 import * as taskDB from "../data/task-data";
 
-export async function getTasks(listId: string) {
-  return await taskDB.getTasks(listId);
+export async function getTasks() {
+  return await taskDB.getTasks();
 }
 
-export async function postNewTask(
-  data: TaskParams,
-  listId: string,
-  userId: number
-) {
-  return await taskDB.postNewTask(data, listId, userId);
+export async function postNewTask(data: TaskParams, userId: number) {
+  return await taskDB.postNewTask(data, userId);
 }
 
 export async function getTaskById(listId: string) {
   return await taskDB.getTaskById(listId);
 }
 
-export async function deleteTask(listId: string, userId: number) {
-  return await taskDB.deleteTask(listId, userId);
+export async function deleteTask(taskId: string, userId: number) {
+  return await taskDB.deleteTask(taskId, userId);
 }

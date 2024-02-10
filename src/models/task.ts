@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const taskSchema = z.object({
-  listId: z.number().int().positive().optional(),
+  listId: z.string(),
   content: z.string({
     required_error: "Content es requerido.",
     invalid_type_error: "Content debe ser un string.",

@@ -23,7 +23,7 @@ process.on("SIGINT", dbShutdown);
 process.on("SIGTERM", dbShutdown);
 app.use(logRequest);
 app.use("/", authRouter);
-app.use("/me", accountRouter);
+app.use("/account", accountRouter);
 app.use("/board", boardRouter);
 app.use("/list", listRouter);
 app.use("/task", taskRouter);
