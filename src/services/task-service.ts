@@ -9,6 +9,10 @@ export async function postNewTask(data: TaskParams, userId: number) {
   return await taskDB.postNewTask(data, userId);
 }
 
+export async function ediTask(taskId: number, content: string, userId: number) {
+  return await taskDB.editTask(taskId, content, userId);
+}
+
 export async function getTaskById(listId: string) {
   return await taskDB.getTaskById(listId);
 }

@@ -2,7 +2,7 @@ import { query } from "../db";
 import { TaskParams } from "../models/task";
 
 export async function getTasks() {
-  return (await query(`SELECT * FROM tasks ;`)).rows;
+  return (await query(`SELECT * FROM tasks ORDER BY id ;`)).rows;
 }
 
 export async function postNewTask(data: TaskParams, userId: number) {
@@ -13,6 +13,22 @@ export async function postNewTask(data: TaskParams, userId: number) {
     RETURNING id, content, createdAt, updatedAt, (SELECT title FROM lists WHERE id = $1) as list;
     `,
       [data.listId, userId, data.content]
+    )
+  ).rows[0];
+}
+
+export async function editTask(
+  taskId: number,
+  taskContent: string,
+  userId: number
+) {
+  console.log({ taskId, taskContent, userId });
+  return (
+    await query(
+      `UPDATE tasks SET content = $1, updatedAt = NOW()  WHERE id = $2 AND userId= $3
+      RETURNING *; 
+    `,
+      [taskContent, taskId, userId]
     )
   ).rows[0];
 }

@@ -3,6 +3,7 @@ import { authenticationHandler } from "../middlewares/authentication";
 import { validationHandler } from "../middlewares/validation";
 import { taskSchema } from "../models/task";
 import { getTasks, deleteTask, postNewTask } from "../services/task-service";
+import { editTask } from "../data/task-data";
 
 export const taskRouter = express.Router();
 
@@ -57,6 +58,22 @@ taskRouter.post(
 //     }
 //   }
 // );
+
+taskRouter.patch("/", authenticationHandler, async (req, res, next) => {
+  try {
+    const userId = req.userId!;
+    const data = req.body;
+    console.log(data);
+    const newTask = await editTask(data.id, data.content, userId);
+    console.log(newTask);
+    res.status(200).json({
+      ok: true,
+      data: newTask,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 taskRouter.delete("/", authenticationHandler, async (req, res, next) => {
   try {
