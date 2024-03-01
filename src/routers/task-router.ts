@@ -29,13 +29,14 @@ taskRouter.get("/", authenticationHandler, async (req, res) => {
 // });
 
 taskRouter.post(
-  "/",
+  "/:boardId",
   authenticationHandler,
   validationHandler(taskSchema),
   async (req, res, next) => {
     try {
       const userId = req.userId!;
-      const task = await postNewTask(req.body, userId);
+      const boardId = req.params["boardId"];
+      const task = await postNewTask(req.body, userId, boardId);
       res.status(201).json({ ok: true, data: task });
     } catch (error) {
       next(error);

@@ -32,7 +32,27 @@ export async function getBoardById(boardId: string) {
   return await query(`SELECT * FROM boards WHERE id = $1;`, [boardId]);
 }
 
+export async function editBoard(
+  data: BoardParams,
+  boardId: string,
+  userId: number
+) {
+  return await query(
+    `UPDATE boards SET title = $1  WHERE id = $2 AND userId = $3;`,
+    [data.title, boardId, userId]
+  );
+}
+
 export async function deleteBoard(boardId: string, userId: number) {
+  await query(`DELETE FROM tasks WHERE boardId =  $1 AND userId = $2`, [
+    boardId,
+    userId,
+  ]);
+  await query(`DELETE FROM lists WHERE boardId =  $1 AND userId = $2`, [
+    boardId,
+    userId,
+  ]);
+
   return (
     await query(`DELETE FROM boards WHERE id = $1 AND userId = $2`, [
       boardId,

@@ -7,6 +7,7 @@ export const up: Migration = async (params) => {
     content VARCHAR(50),
     createdAt TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    boardId INTEGER REFERENCES boards(id) NOT NULL,
     listId INTEGER REFERENCES lists(id) NOT NULL,
     userId INTEGER REFERENCES users(id) NOT NULL
 );

@@ -9,6 +9,14 @@ export async function postNewBoard(data: BoardParams, userId: number) {
   return await boardDB.postNewBoard(data, userId);
 }
 
+export async function editBoard(
+  data: BoardParams,
+  boardId: string,
+  userId: number
+) {
+  return await boardDB.editBoard(data, boardId, userId);
+}
+
 export async function getBoardById(boardId: string) {
   return await boardDB.getBoardById(boardId);
 }

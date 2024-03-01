@@ -5,14 +5,18 @@ export async function getTasks() {
   return (await query(`SELECT * FROM tasks ORDER BY id ;`)).rows;
 }
 
-export async function postNewTask(data: TaskParams, userId: number) {
+export async function postNewTask(
+  data: TaskParams,
+  userId: number,
+  boardId: string
+) {
   return (
     await query(
-      `INSERT INTO tasks (listId,userId,content,createdAt,updatedAt) 
-    VALUES ($1,$2,$3,NOW(),NOW()) 
+      `INSERT INTO tasks (listId,userId,content,createdAt,updatedAt,boardId) 
+    VALUES ($1,$2,$3,NOW(),NOW(),$4) 
     RETURNING id, content, createdAt, updatedAt, (SELECT title FROM lists WHERE id = $1) as list;
     `,
-      [data.listId, userId, data.content]
+      [data.listId, userId, data.content, boardId]
     )
   ).rows[0];
 }

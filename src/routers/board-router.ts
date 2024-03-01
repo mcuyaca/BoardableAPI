@@ -7,6 +7,7 @@ import {
   getBoardById,
   deleteBoard,
   postNewBoard,
+  editBoard,
 } from "../services/board-service";
 import { ApiError } from "../middlewares/error";
 
@@ -31,6 +32,22 @@ boardRouter.post(
     try {
       const userId = req.userId!;
       const board = await postNewBoard(req.body, userId);
+      res.status(201).json({ ok: true, data: board });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+boardRouter.patch(
+  "/:boardId",
+  authenticationHandler,
+  validationHandler(boardSchema),
+  async (req, res, next) => {
+    try {
+      const boardId = req.params["boardId"];
+      const userId = req.userId!;
+      const board = await editBoard(req.body, boardId, userId);
       res.status(201).json({ ok: true, data: board });
     } catch (error) {
       next(error);
