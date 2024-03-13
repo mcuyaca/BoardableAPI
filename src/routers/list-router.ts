@@ -7,8 +7,10 @@ import {
   getListById,
   deleteList,
   postNewList,
+  editList,
 } from "../services/list-service";
 import { ApiError } from "../middlewares/error";
+import { ediTask } from "../services/task-service";
 
 export const listRouter = express.Router();
 
@@ -37,6 +39,25 @@ listRouter.post(
     }
   }
 );
+
+listRouter.patch("/:listId", authenticationHandler, async (req, res, next) => {
+  try {
+    const listId = req.params["listId"];
+    const userId = req.userId!;
+    const list = await getListById(listId);
+    if (list.rowCount === 0) {
+      return next(new ApiError("List no encontrada.", 401));
+    }
+    const newTitle = req.body.tilte as string;
+    const editedList = await editList(listId, newTitle, userId);
+    res.status(200).json({
+      ok: true,
+      data: editedList,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
 
 listRouter.delete("/:listId", authenticationHandler, async (req, res, next) => {
   try {

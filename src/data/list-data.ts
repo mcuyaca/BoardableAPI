@@ -17,6 +17,22 @@ export async function postNewList(data: ListParams, userId: number) {
   ).rows[0];
 }
 
+export async function editList(
+  listId: string,
+  listTitle: string,
+  userId: number
+) {
+  return (
+    await query(
+      `UPDATE lists SET title = $1, updatedAt = NOW() 
+      WHERE id = $2  AND userId= $3
+      RETURNING *; 
+    `,
+      [listTitle, listId, userId]
+    )
+  ).rows[0];
+}
+
 export async function getListById(listId: string) {
   return await query(`SELECT * FROM lists WHERE id = $1;`, [listId]);
 }

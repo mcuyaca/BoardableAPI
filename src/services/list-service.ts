@@ -9,6 +9,14 @@ export async function postNewList(data: ListParams, userId: number) {
   return await listDB.postNewList(data, userId);
 }
 
+export async function editList(
+  listId: string,
+  listTitle: string,
+  userId: number
+) {
+  return await listDB.editList(listId, listTitle, userId);
+}
+
 export async function getListById(listId: string) {
   return await listDB.getListById(listId);
 }
